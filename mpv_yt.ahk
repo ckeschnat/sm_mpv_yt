@@ -42,10 +42,17 @@ NumpadSub::
 strng=
 loop, 10
 	strng .= rdm09azAZ()
+Send, !n
+sleep, 200
+SendRaw, #Link:
+Send, :%Clipboard%
 thefile = C:\docs\supermemo\mpv_yt\link_files\smytmpv_%strng%.bat
 FileAppend, "C:\Program Files\mpv\mpv.exe" %clipboard%, %thefile%
 clipboard = %thefile%
-Send, !n
+sleep, 200
+Send, !{Left}
+sleep, 200
+Send, !{Right}
 return
 }
 return
