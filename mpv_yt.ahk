@@ -43,7 +43,6 @@ NumpadSub::
 Send, ^l
 Send, ^c
 URL=%clipboard%
-MsgBox, %URL%
 Gui, New
 ;Gui, Add, Text,, URL
 ;Gui, Add, Edit, vURL
@@ -54,7 +53,7 @@ Gui, Show
 return
 OK:
 Gui, Submit
-create_element()
+;create_element()
 URL:=""
 Title:=""
 return
@@ -79,10 +78,21 @@ create_element(){
 	loop, 10
 		strng .= rdm09azAZ()
 	Send, !n
-	sleep, 200
-
 	SendRaw, #Link:
-	Send, :%Clipboard%
+	Send, %URL%
+	sleep, 200
+	Send, !{Left}
+	sleep, 200
+	Send, !{Right}
+	Send, q
+	Sleep, 100
+	Send, {DOWN}
+	Send, %Title%
+    SendInput, {HOME}{shift down}{END}{shift up}
+	sleep, 200
+	Send, !t
+
+	return
 	thefile = C:\docs\supermemo\mpv_yt\link_files\smytmpv_%strng%.bat
 	FileAppend, "C:\Program Files\mpv\mpv.exe" %clipboard%, %thefile%
 	clipboard = %thefile%
