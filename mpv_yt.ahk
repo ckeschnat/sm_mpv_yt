@@ -49,6 +49,9 @@ Send, :%Clipboard%
 thefile = C:\docs\supermemo\mpv_yt\link_files\smytmpv_%strng%.bat
 FileAppend, "C:\Program Files\mpv\mpv.exe" %clipboard%, %thefile%
 clipboard = %thefile%
+Send, `n
+Send, \n
+Send, %Clipboard%
 sleep, 200
 Send, !{Left}
 sleep, 200
