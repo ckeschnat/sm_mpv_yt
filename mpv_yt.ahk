@@ -1,7 +1,7 @@
 ; ! Alt
 ; + Shift
-; Ctrl
-; Win
+; ^ Ctrl
+; # Win
 
 ;incremental youtube with mpv
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -147,6 +147,19 @@ NumpadSub::
 	Send, !{Left}
 	sleep, 200
 	Send, !{Right}
+	sleep, 200
+	keywait, LButton, D T10
+	send, ^q
+	sleep, 100
+	send, {TAB}
+	sleep, 100
+	send, {TAB}
+	sleep, 100
+	send, {TAB}
+	sleep, 100
+	send, {TAB}
+	sleep, 100
+	send, ^v
 	return
 }
 return
