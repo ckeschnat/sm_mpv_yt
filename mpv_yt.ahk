@@ -160,6 +160,8 @@ NumpadSub::
 	send, {TAB}
 	sleep, 100
 	send, ^v
+	sleep, 100
+	Send, {ENTER}
 	return
 }
 return
