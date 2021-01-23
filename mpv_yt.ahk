@@ -1,3 +1,8 @@
+; ! Alt
+; + Shift
+; Ctrl
+; Win
+
 ;incremental youtube with mpv
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
@@ -111,20 +116,34 @@ create_element(){
 #IfWinActive ahk_group SuperMemo
 NumpadSub::
 {
+	Send, ^g
+	sleep, 100
+	Send, 1
+	sleep, 100
+	Send, {ENTER}
 	strng=
 	loop, 10
 		strng .= rdm09azAZ()
 	Send, !n
 	sleep, 200
 	SendRaw, #Link:
-	Send, :%Clipboard%
+	Send, %Clipboard%
 	thefile = C:\docs\supermemo\mpv_yt\link_files\smytmpv_%strng%.bat
-	FileAppend, "C:\Program Files\mpv\mpv.exe" %clipboard%, %thefile%
+	FileAppend, Start "" "C:\Program Files\mpv\mpv.exe" %clipboard%, %thefile%
 	clipboard = %thefile%
 	Send, `n
-	Send, \n
 	Send, %Clipboard%
-	sleep, 200
+	
+	;sleep, 200
+	;Send, `n
+	;Send, #v
+	;sleep, 100
+	;Send, {DOWN}
+	;sleep, 5000
+	;Send, {DOWN}
+	;sleep, 5000
+	;Send, {ENTER}
+	
 	Send, !{Left}
 	sleep, 200
 	Send, !{Right}
