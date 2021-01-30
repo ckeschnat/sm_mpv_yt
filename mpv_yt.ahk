@@ -164,7 +164,10 @@ NumpadSub::
 	sleep, 200
 	Send, !{Right}
 	sleep, 200
-	keywait, LButton, D T10
+	;keywait, LButton, D T10
+	CoordMode, Mouse, Window
+    Click, 1174,250
+	sleep, 200
 	send, ^q
 	sleep, 100
 	send, {TAB}
