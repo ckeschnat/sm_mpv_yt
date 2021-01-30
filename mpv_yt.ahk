@@ -17,7 +17,6 @@
 ; Usage:
 ; - copy a youtube url to the clipboard
 ; - activate SM and press minus on the numpad
-; - click the script component (important, because the scripts waits for that)
 ; - enter the title, I copy it from youtube
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
