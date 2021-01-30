@@ -4,6 +4,22 @@
 ; # Win
 
 ;incremental youtube with mpv
+;
+; Modify:
+; line 74 (thefile=...): (empty) folder on your machine, used to temporarily store the script
+; line 75: path to mpv.exe
+;
+; Requirements:
+; - SM template with a script component. this needs to be used by the active concept (so new elements get created with it)
+; - mpv and youtube-dl must be be installed
+; - "save-position-on-quit=yes" in mpv.conf so videos start where you left off
+; 
+; Usage:
+; - copy a youtube url to the clipboard
+; - activate SM and press minus on the numpad
+; - click the script component (important, because the scripts waits for that)
+; - enter the title, I copy it from youtube
+
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
