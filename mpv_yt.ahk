@@ -27,6 +27,11 @@ CoordMode, Mouse, Screen
 #SingleInstance, force
 SetTitleMatchMode,2
 
+I_Icon = C:\Program Files\mpv\installer\mpv-icon.ico
+IfExist, %I_Icon%
+    Menu, Tray, Icon, %I_Icon%
+;return
+
 GroupAdd, SuperMemo, ahk_class TBrowser ;Browser
 GroupAdd, SuperMemo, ahk_class TContents ;Content Window (Knowledge Tree)
 GroupAdd, SuperMemo, ahk_class TElWind ;Element window
