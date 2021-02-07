@@ -6,8 +6,9 @@
 ;incremental youtube with mpv
 ;
 ; Modify:
-; line 74 (thefile=...): (empty) folder on your machine, used to temporarily store the script
-; line 75: path to mpv.exe
+; thefile=...: (empty) folder on your machine, used to temporarily store the script
+; next line: path to mpv.exe
+; coordinates of the 
 ;
 ; Requirements:
 ; - SM template with a script component. this needs to be used by the active concept (so new elements get created with it)
@@ -38,142 +39,78 @@ GroupAdd, SuperMemo, ahk_class TElWind ;Element window
 GroupAdd, SuperMemo, ahk_class TSMMain ;Toolbar
 
 
-
-
 ;https://autohotkey.com/board/topic/88687-generate-file-name/
 rdm09azAZ(){
-restart:
-random, oVar, 48, 122
-if (ovar > 57 and ovar <65) OR (ovar > 90 and ovar <97)
-	goto restart
-return Chr(oVar)
+    restart:
+    random, oVar, 48, 122
+    if (ovar > 57 and ovar <65) OR (ovar > 90 and ovar <97)
+        goto restart
+    return Chr(oVar)
 }
 
 rdm09(){
-random, oVar, 0, 9
-return oVar
+    random, oVar, 0, 9
+    return oVar
 }
 
 rdmaz(){
-random, oVar, 97, 122
-return Chr(oVar)
+    random, oVar, 97, 122
+    return Chr(oVar)
 }
 
 
 global URL:=""
 global Title:=""
 
-#IfWinActive ahk_class MozillaWindowClass
-NumpadSub::
-Send, ^l
-Send, ^c
-URL=%clipboard%
-Gui, New
-;Gui, Add, Text,, URL
-;Gui, Add, Edit, vURL
-Gui, Add, Text,, Title
-Gui, Add, Edit, vTitle
-Gui, Add, Button, Default gOK, OK
-Gui, Show
-return
-OK:
-Gui, Submit
-;create_element()
-URL:=""
-Title:=""
-return
-
-
-create_element(){
-	if WinExist("ahk_exe sm18.exe") {
-		WinActivate, ahk_exe sm18.exe
-	}
-	else  {
-		MsgBox, 4, , SuperMemo is not running.`n`nRun SuperMemo now?, 5  ; 5-second timeout.
-		IfMsgBox, No
-			Return  ; User pressed the "No" button.
-		IfMsgBox, Timeout
-			Return ; Assume "No" if timed out.
-		; Otherwise, continue:
-		Run E:\SuperMemo\sm18.exe ; Replace with correct path to sm16.exe
-		WinWait, ahk_class TElWind
-		WinActivate
-	}
-	strng=
-	loop, 10
-		strng .= rdm09azAZ()
-	Send, !n
-	SendRaw, #Link:
-	Send, %URL%
-	sleep, 200
-	Send, !{Left}
-	sleep, 200
-	Send, !{Right}
-	Send, q
-	Sleep, 100
-	Send, {DOWN}
-	Send, %Title%
-    SendInput, {HOME}{shift down}{END}{shift up}
-	sleep, 200
-	Send, !t
-
-	return
-	thefile = C:\docs\supermemo\mpv_yt\link_files\smytmpv_%strng%.bat
-	FileAppend, "C:\Program Files\mpv\mpv.exe" %clipboard%, %thefile%
-	clipboard = %thefile%
-	Send, `n
-	Send, \n
-	Send, %Clipboard%
-	sleep, 200
-	Send, !{Left}
-	sleep, 200
-	Send, !{Right}
-	return
-}
-
-
-
 #IfWinActive ahk_group SuperMemo
 NumpadSub::
 {
+    ; go to the first SM element so that alt-left doesn't open another video element and start the video
 	Send, ^g
 	sleep, 100
 	Send, 1
 	sleep, 100
 	Send, {ENTER}
+	
+	; create a random string to use as part of a file name
 	strng=
 	loop, 10
 		strng .= rdm09azAZ()
+	
+	; create a new element
 	Send, !n
 	sleep, 200
+	
+	; write "#Link:https://..." into the element. this will be turned into a link reference automatically by SM (see below)
 	SendRaw, #Link:
 	Send, %Clipboard%
+	
+	; temproray file to store the bat script
 	thefile = C:\docs\supermemo\mpv_yt\link_files\smytmpv_%strng%.bat
+	
+	; script content: run mpv with the youtube url as parameter
 	FileAppend, Start "" "C:\Program Files\mpv\mpv.exe" %clipboard%, %thefile%
+	
+	; a) put the path to that file into the clipboard and b) paste it into the element (b) is optional and can be removed. no purpose other than information)
 	clipboard = %thefile%
 	Send, `n
 	Send, %Clipboard%
 	
-	;sleep, 200
-	;Send, `n
-	;Send, #v
-	;sleep, 100
-	;Send, {DOWN}
-	;sleep, 5000
-	;Send, {DOWN}
-	;sleep, 5000
-	;Send, {ENTER}
-	
+	; close and open the element so that SM creates the 'Link' reference
 	Send, !{Left}
 	sleep, 200
 	Send, !{Right}
 	sleep, 200
-	;keywait, LButton, D T10
+	; click on the script component (adjust coordinates)
 	CoordMode, Mouse, Window
     Click, 1174,250
 	sleep, 200
+	
+	; Ctrl-q to choose the script
 	send, ^q
 	sleep, 100
+	
+	; go to the input field
 	send, {TAB}
 	sleep, 100
 	send, {TAB}
@@ -182,9 +119,14 @@ NumpadSub::
 	sleep, 100
 	send, {TAB}
 	sleep, 100
+	
+	; paste the path to the script (we put it into the clipboard above)
 	send, ^v
 	sleep, 100
 	Send, {ENTER}
+	
+	; everything done. SM should now ask for the title. choose what you like (i copy the video title from youtube)
+	; when you open the element for the first time, SM asks if you want to trust the script. choose yes
 	return
 }
 return
